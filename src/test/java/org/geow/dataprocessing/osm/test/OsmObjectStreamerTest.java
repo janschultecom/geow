@@ -28,7 +28,7 @@ public class OsmObjectStreamerTest {
 	@Before
 	public void setUp() throws StreamException {
 		inputFile = OsmObjectStreamerTest.class.getClassLoader().getResource(
-				"germany.nrw.dueseldorf.center.osm");
+				"germany.nrw.dusseldorf.center.osm");
 		streamer = new OsmObjectStreamer(inputFile);
 	}
 
