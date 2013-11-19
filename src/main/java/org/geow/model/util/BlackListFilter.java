@@ -24,27 +24,20 @@ import org.geow.model.IOsmTag;
 import org.geow.model.impl.OsmTagImpl;
 
 /**
- * A filter using a whitelist and a blacklist. 
- * Elements having tags from the blacklist, are rejected. However, if at the same time, 
- * the element has a tag from the whitelist, it is accepted anyways. 
+ * A filter using a blacklist. All elements are accepted that don't have any tag
+ * from the blacklist. Put it in other words, if the element has at least one
+ * element from the blacklist, it gets rejected.
  * 
  * @author Jan
- *
+ * 
  */
-public class WhiteBlackListFilter implements IFilter{
+public class BlackListFilter implements IFilter {
 
 	protected List<IOsmTag> whiteList;
 	protected List<IOsmTag> blackList;
 
-	public WhiteBlackListFilter(String[][] WHITE_LIST, String[][] BLACK_LIST) {
+	public BlackListFilter(String[][] BLACK_LIST) {
 		super();
-		whiteList = new ArrayList<IOsmTag>();
-		for (String[] whiteItem : WHITE_LIST) {
-			String key = whiteItem[0];
-			String value = whiteItem[1];
-			whiteList.add(new OsmTagImpl(key, value));
-		}
-
 		blackList = new ArrayList<IOsmTag>();
 		for (String[] blackItem : BLACK_LIST) {
 			String key = blackItem[0];
@@ -52,7 +45,7 @@ public class WhiteBlackListFilter implements IFilter{
 			blackList.add(new OsmTagImpl(key, value));
 		}
 	}
-	
+
 	@Override
 	public boolean accept(IOsmElement element) {
 		List<IOsmTag> tags = element.getTag();
@@ -60,12 +53,7 @@ public class WhiteBlackListFilter implements IFilter{
 		if (blackListIntersection.size() == 0) {
 			return true;
 		} else {
-			List whiteListIntersection = ListUtils.intersection(tags, whiteList);
-			if(whiteListIntersection.size() > 0){
-				return true;
-			}else{
-				return false;
-			}
+			return false;
 		}
 	}
 }
