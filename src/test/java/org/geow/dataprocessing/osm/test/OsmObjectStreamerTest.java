@@ -39,16 +39,16 @@ public class OsmObjectStreamerTest {
 				IOsmObject element = streamer.next();
 				if (element instanceof Node) {
 					IOsmNode node = ((IOsmNode) element);
-					logger.trace("Streamer returned node {}",node);
+					logger.trace("Streamer returned {}",node);
 				} else if (element instanceof Way) {
 					IOsmWay way = ((IOsmWay) element);
-					logger.trace("Streamer returned way {}",way);
+					logger.trace("Streamer returned {}",way);
 				} else if (element instanceof Relation) {
 					IOsmRelation rel = ((IOsmRelation) element);
-					logger.trace("Streamer returned way {}",rel);
+					logger.trace("Streamer returned {}",rel);
 				} else if (element instanceof Bounds) {
 					IOsmBounds bounds = ((IOsmBounds) element);
-					logger.trace("Streamer returned way {}",bounds);
+					logger.trace("Streamer returned {}",bounds);
 				}else{
 					logger.error("Streamer couldnt parse element: "+element+"\nClazz: "+element.getClass().getSimpleName());
 				}

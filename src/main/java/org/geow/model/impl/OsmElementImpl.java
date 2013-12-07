@@ -18,7 +18,6 @@ package org.geow.model.impl;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.geow.model.IOsmElement;
 import org.geow.model.IOsmTag;
@@ -30,7 +29,7 @@ import org.geow.model.IOsmTag;
  * @author Jan Schulte
  *
  */
-public class OsmElementImpl implements IOsmElement{
+public abstract class OsmElementImpl implements IOsmElement{
 
 	protected List<IOsmTag> tags = new ArrayList<IOsmTag>();
 	protected BigInteger id = BigInteger.ZERO;
@@ -123,23 +122,6 @@ public class OsmElementImpl implements IOsmElement{
 		this.visible = visible;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, uid, version);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		OsmElementImpl other = (OsmElementImpl) obj;
-		
-		return Objects.equals(id, other.getId()) && Objects.equals(uid, other.getUid()) && Objects.equals(version, other.getVersion());
-	}
 
 	@Override
 	public <T extends IOsmTag> void setTag(List<T> tags) {

@@ -171,12 +171,13 @@ public class OsmExternalizer implements Serializable{
 		
 		IOsmElement element = readElementHeader(ois);
 		if(element instanceof IOsmNode){
-			element = readExternalNode(ois, (OsmNodeImpl) element);
+			element = readExternalNode(ois, (IOsmNode)element);
 		}else if(element instanceof IOsmWay){
-			element = readExternalWay(ois, (OsmWayImpl) element);			
+			element = readExternalWay(ois, (IOsmWay)element);			
 		}else if(element instanceof IOsmRelation){
-			element = readExternalRelation(ois, (OsmRelationImpl) element);			
+			element = readExternalRelation(ois, (IOsmRelation)element);			
 		}
+		ois.close();
 		return element;
 	}
 	
@@ -335,7 +336,7 @@ public class OsmExternalizer implements Serializable{
 	 * @param out The objectoutput to serialize to
 	 * @throws IOException
 	 */
-	private void writeElementHeader(IOsmElement element, ObjectOutput out) throws IOException{
+	public void writeElementHeader(IOsmElement element, ObjectOutput out) throws IOException{
 		if(element instanceof IOsmNode) {
 			out.writeShort(ELEMENT_TYPE.NODE.ordinal());
 		}else if(element instanceof IOsmWay){
@@ -354,7 +355,7 @@ public class OsmExternalizer implements Serializable{
 	 * @return An implementation of IOsmNode, IOsmWay or IOsmRelation
 	 * @throws IOException
 	 */
-	private IOsmElement readElementHeader(ObjectInput in) throws IOException {	
+	public IOsmElement readElementHeader(ObjectInput in) throws IOException {	
 		int type = in.readShort();
 		if(type > ELEMENT_TYPE.values().length){
 			throw new IOException("Invalid type for IOsmElement, should be between 0 and "+ELEMENT_TYPE.values().length+", but was "+type);
@@ -387,7 +388,7 @@ public class OsmExternalizer implements Serializable{
 	 * @param out The objectoutput to serialize to
 	 * @throws IOException
 	 */
-	private void writeExternalProperties(IOsmElement element, ObjectOutput out)
+	public void writeExternalProperties(IOsmElement element, ObjectOutput out)
 			throws IOException {
 		out.writeLong(element.getId().longValue());
 		
@@ -422,7 +423,7 @@ public class OsmExternalizer implements Serializable{
 	 * @param element The element to set the properties
 	 * @throws IOException
 	 */
-	private void readExternalProperties(ObjectInput in, IOsmElement element)
+	public void readExternalProperties(ObjectInput in, IOsmElement element)
 			throws IOException {
 		element.setId(BigInteger.valueOf(in.readLong()));
 		element.setTimestamp(readDate(in.readLong()));
@@ -440,7 +441,7 @@ public class OsmExternalizer implements Serializable{
 	 * @param out The objectoutput to serialize to
 	 * @throws IOException
 	 */
-	private void writeExternalTags(IOsmElement element, ObjectOutput out)
+	public void writeExternalTags(IOsmElement element, ObjectOutput out)
 			throws IOException {
 		List<IOsmTag> tags = element.getTag();
 		int tagSize = 0;
@@ -462,7 +463,7 @@ public class OsmExternalizer implements Serializable{
 	 * @param element The element to set the tags
 	 * @throws IOException
 	 */
-	private void readExternalTags(ObjectInput in, IOsmElement element)
+	public void readExternalTags(ObjectInput in, IOsmElement element)
 			throws IOException {
 		int tagSize = in.readInt();
 		List<OsmTagImpl> tags = element.getTag();
