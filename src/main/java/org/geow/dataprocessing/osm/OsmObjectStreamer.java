@@ -19,6 +19,7 @@ import static javax.xml.stream.XMLStreamConstants.CHARACTERS;
 import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,10 +46,10 @@ public class OsmObjectStreamer implements IObjectStreamer<IOsmObject> {
 	private JAXBContext jaxbContext = null;
 	private XMLStreamReader xmlStreamReader = null;
 	private Unmarshaller unmarshaller = null;
-	private URL inputFile = null;
+	private File inputFile = null;
 	private InputStream stream = null;
 
-	public OsmObjectStreamer(URL inputFile) throws StreamException {
+	public OsmObjectStreamer(File inputFile) throws StreamException {
 		try {
 			jaxbContext = JAXBContext.newInstance(Osm.class, Way.class,
 					Node.class, Bounds.class, Member.class, Nd.class,
@@ -127,7 +128,7 @@ public class OsmObjectStreamer implements IObjectStreamer<IOsmObject> {
 		try {
 
 			//stream = inputFile.openStream();
-			stream = new BufferedInputStream(new FileInputStream(inputFile.getFile()));
+			stream = new BufferedInputStream(new FileInputStream(inputFile));
 			xmlStreamReader = XMLInputFactory.newInstance()
 					.createXMLStreamReader(stream);
 			xmlStreamReader.nextTag();
