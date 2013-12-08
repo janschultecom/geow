@@ -1,14 +1,14 @@
 Geow Openstreetmap API
-===========================
+
 
 Geow is a simple openstreetmap API designed specifically designed for streaming and processing openstreetmap data.
 
 
-## Documentation
+Documentation
 
 Documentation and tutorials can be found on the [Geow wiki](http://github.com/jansonhanson/geow/wiki).
 
 
-### Building from Source
+Building from Source
 
-		$ mvn install
+	$ mvn install
