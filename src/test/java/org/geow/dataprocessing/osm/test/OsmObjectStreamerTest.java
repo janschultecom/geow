@@ -16,6 +16,7 @@ import org.geow.model.IOsmObject;
 import org.geow.model.IOsmRelation;
 import org.geow.model.IOsmWay;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class OsmObjectStreamerTest {
@@ -32,7 +33,7 @@ public class OsmObjectStreamerTest {
 		streamer = new OsmObjectStreamer(inputFile);
 	}
 
-	@Test
+	@Ignore @Test
 	public void testOsmObjectStreamer() throws StreamException {
 			streamer.open();
 			while (streamer.hasNext()) {
