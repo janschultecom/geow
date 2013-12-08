@@ -10,8 +10,4 @@ Building from Source
         $ mvn install
 
 #Getting started
-
-
-#Documentation
-
-Documentation and tutorials can be found on the [Geow wiki](http://github.com/jansonhanson/geow/wiki).
+Check out the [Getting Started](http://github.com/jansonhanson/geow/wiki/Getting-started) guide to dive into the geow api. Further documentation can be fund in the [Geow wiki](http://github.com/jansonhanson/geow/wiki).
