@@ -1,15 +1,12 @@
 package org.geow.dataprocessing.osm.test;
 
+import java.io.File;
 import java.net.URL;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.geow.dataprocessing.StreamException;
-import org.geow.dataprocessing.osm.Bounds;
-import org.geow.dataprocessing.osm.Node;
 import org.geow.dataprocessing.osm.OsmObjectStreamer;
-import org.geow.dataprocessing.osm.Relation;
-import org.geow.dataprocessing.osm.Way;
 import org.geow.model.IOsmBounds;
 import org.geow.model.IOsmNode;
 import org.geow.model.IOsmObject;
@@ -23,45 +20,54 @@ public class OsmObjectStreamerTest {
 			.getName());
 
 	private OsmObjectStreamer streamer;
-	private URL inputFile;
 
 	@Before
 	public void setUp() throws StreamException {
-		inputFile = OsmObjectStreamerTest.class.getClassLoader().getResource(
-				"germany.nrw.dusseldorf.center.osm");
-		streamer = new OsmObjectStreamer(inputFile);
+		/**
+		 * Download your .osm file into the test/resources folder in order to perform test. 
+		 */
+		URL path = OsmObjectStreamerTest.class.getClassLoader().getResource(
+				"tinytest.osm");
+		if(path != null){
+			File inputFile = new File(path.getFile());
+			streamer = new OsmObjectStreamer(inputFile);
+		}
 	}
 
 	@Test
 	public void testOsmObjectStreamer() throws StreamException {
-			streamer.open();
-			while (streamer.hasNext()) {
-				IOsmObject element = streamer.next();
-				if (element instanceof Node) {
-					IOsmNode node = ((IOsmNode) element);
-					logger.trace("Streamer returned {}",node);
-				} else if (element instanceof Way) {
-					IOsmWay way = ((IOsmWay) element);
-					logger.trace("Streamer returned {}",way);
-				} else if (element instanceof Relation) {
-					IOsmRelation rel = ((IOsmRelation) element);
-					logger.trace("Streamer returned {}",rel);
-				} else if (element instanceof Bounds) {
-					IOsmBounds bounds = ((IOsmBounds) element);
-					logger.trace("Streamer returned {}",bounds);
-				}else{
-					logger.error("Streamer couldnt parse element: "+element+"\nClazz: "+element.getClass().getSimpleName());
+			if(streamer != null){
+				streamer.open();
+				while (streamer.hasNext()) {
+					IOsmObject element = streamer.next();
+					if (element instanceof IOsmNode) {
+						IOsmNode node = (IOsmNode) element;
+						logger.trace("Streamer returned {}",node);
+					} else if (element instanceof IOsmWay) {
+						IOsmWay way = (IOsmWay) element;
+						logger.trace("Streamer returned {}",way);
+					} else if (element instanceof IOsmRelation) {
+						IOsmRelation rel = (IOsmRelation) element;
+						logger.trace("Streamer returned {}",rel);
+					} else if (element instanceof IOsmBounds) {
+						IOsmBounds bounds = (IOsmBounds) element;
+						logger.trace("Streamer returned {}",bounds);
+					}else{
+						logger.error("Streamer couldnt parse element: "+element+"\nClazz: "+element.getClass().getSimpleName());
+					}
+	
 				}
-
+				streamer.close();
 			}
-			streamer.close();
 	}
 
 	@Test
 	public void testOpenClose() throws StreamException {
-		streamer.open();
-		streamer.restart();
-		streamer.close();
+		if(streamer != null){
+			streamer.open();
+			streamer.restart();
+			streamer.close();
+		}
 	}
 
 }
