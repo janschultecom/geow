@@ -15,11 +15,13 @@
  ******************************************************************************/
 package org.geow.model;
 
+import java.io.Serializable;
+
 /**
  * Generic supertype for all osm objects
  * @author Jan Schulte
  *
  */
-public interface IOsmObject {
+public interface IOsmObject extends Serializable{
 
 }
