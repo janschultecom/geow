@@ -33,6 +33,11 @@ import org.geow.model.util.OsmComparator;
  */
 public class OsmWayImpl extends OsmElementImpl implements IOsmWay {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1070332300878363370L;
+	
 	private List<IOsmNd> nds = new ArrayList<IOsmNd>();
 	
 	public OsmWayImpl(BigInteger id) {
@@ -41,10 +46,23 @@ public class OsmWayImpl extends OsmElementImpl implements IOsmWay {
 	}
 
 
+	/**
+	 * Constructs an empty way with an empty nd list. 
+	 */
 	public OsmWayImpl() {
 		super();
 	}
 
+	/**
+	 * Creates a new way from the given way. 
+	 * @param way
+	 */
+	public OsmWayImpl(IOsmWay way){
+		super(way);
+		
+		this.nds = new ArrayList<IOsmNd>(way.getNd());		
+	}
+	
 
 	@Override
 	public <T extends IOsmNd> List<T> getNd() {

@@ -31,6 +31,11 @@ import org.geow.model.IOsmTag;
  */
 public abstract class OsmElementImpl implements IOsmElement{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4587269158177049421L;
+	
 	protected List<IOsmTag> tags = new ArrayList<IOsmTag>();
 	protected BigInteger id = BigInteger.ZERO;
 	protected BigInteger uid = BigInteger.ZERO;
@@ -45,6 +50,25 @@ public abstract class OsmElementImpl implements IOsmElement{
 	 */
 	public OsmElementImpl() {
 		super();
+	}
+
+	/**
+	 * Creates a new osm element from the given element. 
+	 * @param element
+	 */
+	public OsmElementImpl(IOsmElement element) {
+
+		this.setId(element.getId());
+		
+		
+		this.setTimestamp(element.getTimestamp());
+		this.setChangeset(element.getChangeset());
+		this.setUid(element.getUid());
+		this.setUser(element.getUser());
+		this.setVersion(element.getVersion());
+		this.setVisible(element.isVisible());
+		
+		this.tags = new ArrayList<IOsmTag>(element.getTag());
 	}
 
 	@Override

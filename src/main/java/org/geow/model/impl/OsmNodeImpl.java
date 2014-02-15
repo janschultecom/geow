@@ -31,16 +31,38 @@ import org.geow.model.util.OsmComparator;
 public class OsmNodeImpl extends OsmElementImpl implements IOsmNode{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1189005523083764232L;
+	
 	private BigDecimal lat = BigDecimal.ZERO;
 	private BigDecimal lon = BigDecimal.ZERO;
 	
+	/**
+	 * Creates an empty node with lonlat set to [0.0,0.0]
+	 */
 	public OsmNodeImpl() {
 		super();
 	}
 	
+	/**
+	 * Creates an empty node with the given id and lonlat set to [0.0,0.0] 
+	 */
 	public OsmNodeImpl(BigInteger id){
 		super();
 		this.id = id;
+	}
+	
+	/**
+	 * Creates a new node from the given node. 
+	 * @param node
+	 */
+	public OsmNodeImpl(IOsmNode node){
+		super(node);
+		
+		this.setLon(node.getLon());
+		this.setLat(node.getLat());
 	}
 	
 	@Override

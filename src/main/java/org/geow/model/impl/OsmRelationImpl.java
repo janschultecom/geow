@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.geow.model.IOsmMember;
+import org.geow.model.IOsmNd;
 import org.geow.model.IOsmRelation;
 import org.geow.model.util.OsmComparator;
 
@@ -33,6 +34,11 @@ import org.geow.model.util.OsmComparator;
  */
 public class OsmRelationImpl extends OsmElementImpl implements IOsmRelation {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7667790068365217523L;
+	
 	private List<IOsmMember> members = new ArrayList<IOsmMember>();
 	
 	/**
@@ -50,6 +56,17 @@ public class OsmRelationImpl extends OsmElementImpl implements IOsmRelation {
 		super();
 		this.id = id;
 	}	
+	
+	
+	/**
+	 * Creates a new relation from the given relation.
+	 * @param rel
+	 */
+	public OsmRelationImpl(IOsmRelation rel){
+		super(rel);
+		this.members = new ArrayList<IOsmMember>(rel.getMember());		
+	}
+	
 
 	@Override
 	public <T extends IOsmMember> List<T> getMember() {
